@@ -1,2 +1,2 @@
 # r/Minecraft Twitter Bot
-This open-source twitter bot posts media from [r/minecraft](https://reddit.com/r/minecraft) to twitter.
+This open-source [twitter bot](https://twitter.com/rMinecraftBot) posts media from [r/minecraft](https://reddit.com/r/minecraft) to twitter.
