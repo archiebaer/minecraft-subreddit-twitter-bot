@@ -69,20 +69,20 @@ function checkNewPosts(first) {
       //Upload image to twitter
       console.log("Step 2/3: Uploading image...");
       t.post("media/upload", {media_data: b64}, (err, data, res) => {
-        if (err || res.statusCode != 200) return console.log("Failed to upload image: " +  + err || data);
+        if (err || res.statusCode != 200) return console.log("Failed to upload image");
         const mediaId = data.media_id_string;
 
         //Tweet
         console.log("Step 3/3: Tweeting...");
         t.post("statuses/update", {status: tweetMsg, media_ids: [mediaId]}, (err, data, res) => {
-          if (err || res.statusCode != 200) return console.log("Failed to Tweet: " + err || data);
+          if (err || res.statusCode != 200) return console.log("Failed to Tweet");
           console.log(`Success! https://twitter.com/${data.user.screen_name}/status/${data.id_str}`);
         });
 
       });
 
     }).catch((err) => {
-      console.log("Failed to get image: " + err);
+      console.log("Failed to get image");
     });
 
   }).catch(() => {});
