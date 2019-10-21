@@ -1,7 +1,7 @@
 const twitter = require("twit");
 const fs = require("fs");
 const credentials = JSON.parse(fs.readFileSync(__dirname + "/credentials.json", "utf8"));
-const t = new twitter(credentials.twitter);
+const t = new twitter(credentials);
 const request = require("request");
 const i2b64 = require("image-to-base64");
 let lastTweeted;
