@@ -3,14 +3,8 @@ const fs = require("fs");
 const credentials = JSON.parse(fs.readFileSync(__dirname + "/credentials.json", "utf8"));
 const t = new twitter(credentials.twitter);
 const request = require("request");
+const i2b64 = require("image-to-base64");
 let lastTweeted;
-
-//Tweet
-function tweet(status) {
-  t.post("statuses/update", {status}, (err, data, response) => {
-    if (err) return console.log("Tweet Error: " + err);
-  });
-}
 
 //Get Posts
 function getPosts() {
@@ -62,8 +56,34 @@ function checkNewPosts(first) {
     const latest = posts[posts.length - 1];
     if (lastTweeted === latest.id) return;
     lastTweeted = latest.id;
+    if (first) return;
+    console.log("Attempting to upload " + latest.postUrl);
 
-    console.log(tweetBody(latest));
+    const tweetMsg = tweetBody(latest);
+    if (tweetMsg.length > 280) return console.log("Tweet is too long");
+
+    //Get Image
+    console.log("Step 1/3: Getting image...");
+    i2b64(latest.url).then((b64) => {
+
+      //Upload image to twitter
+      console.log("Step 2/3: Uploading image...");
+      t.post("media/upload", {media_data: b64}, (err, data, res) => {
+        if (err || res.statusCode != 200) return console.log("Failed to upload image");
+        const mediaId = data.media_id_string;
+
+        //Tweet
+        console.log("Step 3/3: Tweeting...");
+        t.post("statuses/update", {status: tweetMsg, media_ids: [mediaId]}, (err, data, response) => {
+          if (err || res.statusCode != 200) return console.log("Failed to Tweet");
+          console.log(`Success! https://twitter.com/${data.user.screen_name}/status/${data.id_str}`);
+        });
+
+      });
+
+    }).catch(() => {
+      console.log("Failed to get image");
+    });
 
   }).catch(() => {});
 }
