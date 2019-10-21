@@ -4,7 +4,7 @@ const credentials = JSON.parse(fs.readFileSync(__dirname + "/credentials.json", 
 const t = new twitter(credentials);
 const request = require("request");
 const i2b64 = require("image-to-base64");
-let lastTweeted;
+const tweeted = [];
 
 //Get Posts
 function getPosts() {
@@ -54,8 +54,8 @@ function checkNewPosts(first) {
 
     if (posts.length <= 0) return;
     const latest = posts[posts.length - 1];
-    if (lastTweeted === latest.id) return;
-    lastTweeted = latest.id;
+    if (tweeted.includes(latest.id)) return;
+    lastTweeted.push(latest.id);
     if (first) return;
     console.log("Attempting to upload " + latest.postUrl);
 
