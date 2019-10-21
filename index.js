@@ -44,7 +44,7 @@ function getPosts() {
 
 //Generate Tweet Message Content
 function tweetBody(post) {
-  return `"${post.title}" (${post.score} points) on r/minecraft. ${post.postUrl}`;
+  return `"${post.title}" (${post.score} points) ${post.postUrl}`;
 }
 
 //Check for new posts
