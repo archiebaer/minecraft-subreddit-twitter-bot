@@ -74,7 +74,7 @@ function checkNewPosts(first) {
 
         //Tweet
         console.log("Step 3/3: Tweeting...");
-        t.post("statuses/update", {status: tweetMsg, media_ids: [mediaId]}, (err, data, response) => {
+        t.post("statuses/update", {status: tweetMsg, media_ids: [mediaId]}, (err, data, res) => {
           if (err || res.statusCode != 200) return console.log("Failed to Tweet: " + err || data);
           console.log(`Success! https://twitter.com/${data.user.screen_name}/status/${data.id_str}`);
         });
