@@ -55,7 +55,7 @@ function checkNewPosts(first) {
     if (posts.length <= 0) return;
     const latest = posts[posts.length - 1];
     if (tweeted.includes(latest.id)) return;
-    lastTweeted.push(latest.id);
+    tweeted.push(latest.id);
     if (first) return;
     console.log("Attempting to upload " + latest.postUrl);
 
