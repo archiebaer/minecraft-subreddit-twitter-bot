@@ -42,11 +42,6 @@ function getPosts() {
   });
 }
 
-//Generate Tweet Message Content
-function tweetBody(post) {
-  return `"${post.title}" (${post.score} points) ${post.postUrl}`;
-}
-
 //Check for new posts
 function checkNewPosts(first) {
   getPosts().then((posts) => {
@@ -59,7 +54,7 @@ function checkNewPosts(first) {
     if (first) return;
     console.log("Attempting to upload " + latest.postUrl);
 
-    const tweetMsg = tweetBody(latest);
+    const tweetMsg = latest.post.title;
     if (tweetMsg.length > 280) return console.log("Tweet is too long");
 
     //Get Image
